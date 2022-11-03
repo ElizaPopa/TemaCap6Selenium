@@ -19,29 +19,7 @@ public class AlertsTests {
 
 
     public static void promptAlert() {
-        ChromeDriver driver = null;
-        try {
-            driver = BrowserManager.getChromeDriver();
-            driver.get("https://testpages.herokuapp.com/styled/alerts/alert-test.html");
 
-            WebElement promptButton = driver.findElement(By.id("promptexample"));
-            WebElement textPrompt = driver.findElement(By.id("promptreturn"));
-            promptButton.click();
-            Alert alert = driver.switchTo().alert();
-            System.out.println("Mesajul din alerta este: " + alert.getText());
-            alert.sendKeys("Am introdus un text nou in alerta");
-            alert.accept();
-            WebElement getTextAlert = driver.findElement(By.id("promptexplanation"));
-            System.out.println(getTextAlert.getText());
-
-            System.out.println("Este deschisa alerta dupa ce a fost inchisa? " + isAlertOpen(driver));
-        } catch (UnhandledAlertException e) {
-            System.out.println("Ramura catch");
-        } finally {
-            if (driver != null) {
-                driver.quit();
-            }
-        }
     }
 
     public static void fakeAlert() {
