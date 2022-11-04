@@ -1,13 +1,9 @@
-import demoQA.BrowserWindowsPage;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
-public class DemoQATests {
-    ChromeDriver driver;
-    BrowserWindowsPage browserWindowsPage;
+public class DemoQATests extends Base {
+
     @Test
     public  void thirdTests() {
-        browserWindowsPage = new BrowserWindowsPage(driver);
         browserWindowsPage.BrowserWindows();
     }
 }

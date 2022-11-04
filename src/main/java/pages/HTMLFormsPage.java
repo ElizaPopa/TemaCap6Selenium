@@ -1,11 +1,7 @@
-package herokuApp;
+package pages;
 
-import implementation.BrowserManager;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import java.io.File;
@@ -15,7 +11,7 @@ import java.util.Set;
 
 public class HTMLFormsPage extends BasePage {
 
-    @FindBy(id = "htmlformtest")
+    @FindBy(xpath = "//a[@id='windowstest']")
     private WebElement htmlFormsLink;
     @FindBy(id = "HTMLFormElements")
     private WebElement form;
@@ -39,14 +35,12 @@ public class HTMLFormsPage extends BasePage {
     private WebElement codeButton;
     @FindBy(className = "explanation")
     private WebElement textMessage;
-    public HTMLFormsPage(ChromeDriver driver) {
+    public HTMLFormsPage(WebDriver driver) {
         super(driver);
     }
 
     public void HTMLFormsExample() {
-        ChromeDriver driver = null;
         try {
-            driver = BrowserManager.getChromedriver();
             driver.get(urlHerokuApp);
             htmlFormsLink.click();
             username.sendKeys("Callie Legston");
@@ -69,10 +63,11 @@ public class HTMLFormsPage extends BasePage {
         } catch (Exception | Error e) {
             e.printStackTrace();
             if (driver != null) {
-                File file = driver.getScreenshotAs(OutputType.FILE);
+                TakesScreenshot scrShot =((TakesScreenshot)driver);
+                File srcFile=scrShot.getScreenshotAs(OutputType.FILE);
                 File destinationFile = new File("/Users/mr.lee/Desktop/poza.png");
                 try {
-                    FileUtils.copyFile(file, destinationFile);
+                    FileUtils.copyFile(srcFile, destinationFile);
                 } catch (IOException ex) {
                     System.out.println("Screenshot copy failed");
                 }
@@ -87,9 +82,7 @@ public class HTMLFormsPage extends BasePage {
     }
 
     public void windowsLinks() {
-        ChromeDriver driver = null;
         try {
-            driver = BrowserManager.getChromedriver();
             driver.get(urlHerokuApp);
             htmlFormsLink.click();
             firstLink.click();

@@ -1,13 +1,12 @@
-package herokuApp;
+package pages;
 
-import implementation.BrowserManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import utils.JavascriptUtils;
 
 public class AlertsPage extends BasePage {
-    public AlertsPage(WebDriver driver) {
-        super(driver);
-    }
+
+    JavascriptUtils jsUtils;
     @FindBy(id = "promptexample")
     private WebElement promptButton;
     @FindBy(id = "promptreturn")
@@ -24,15 +23,17 @@ public class AlertsPage extends BasePage {
     private WebElement okButton;
     @FindBy(id = "modaldialog")
     private WebElement modalField;
+    public AlertsPage(WebDriver driver) {
+        super(driver);
+    }
 
     public void promptBox() {
         try {
-            driver = BrowserManager.getChromedriver();
             driver.get(urlHerokuApp);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].scrollIntoView();", alertsJSLink);
+            jsUtils = new JavascriptUtils(driver);
+            jsUtils.executeScriptToElement(jsUtils.SCROLL_INTO_VIEW_SCRIPT, alertsJSLink);
             alertsJSLink.click();
-            js.executeScript("arguments[0].scrollIntoView();", promptButton);
+            jsUtils.executeScriptToElement(jsUtils.SCROLL_INTO_VIEW_SCRIPT, promptButton);
             promptButton.click();
             Alert alert = driver.switchTo().alert();
             System.out.println("Mesajul din alerta este: " + alert.getText());
@@ -50,9 +51,7 @@ public class AlertsPage extends BasePage {
     }
 
     public void fakeAlert() {
-        WebDriver driver = null;
         try {
-            driver = BrowserManager.getChromedriver();
             driver.get(urlHerokuApp);
             fakeAlertLink.click();
             alertBoxButton.click();
@@ -78,4 +77,3 @@ public class AlertsPage extends BasePage {
         }
     }
 }
-

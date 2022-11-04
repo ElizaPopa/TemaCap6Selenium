@@ -1,30 +1,23 @@
-package demoQA;
+package pages;
 
-import implementation.BrowserManager;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import java.io.File;
 import java.util.Set;
 
 public class BrowserWindowsPage extends BasePage {
-
-    @FindBy(id = "tabButton")
+    @FindBy(xpath = "//button[@id='tabButton']")
     private WebElement newTab;
     @FindBy(id = "windowButton")
     private WebElement newWindow;
     @FindBy(id = "messageWindowButton")
     private WebElement newWindowMessage;
 
-    public BrowserWindowsPage(ChromeDriver driver) { super(driver); }
+    public BrowserWindowsPage(WebDriver driver) { super(driver); }
 
     public void BrowserWindows() {
-        ChromeDriver driver = null;
         try {
-            driver = BrowserManager.getChromedriver();
             driver.get(urlDemoQA);
             newTab.click();
             String parentWindow = driver.getWindowHandle();
@@ -50,10 +43,11 @@ public class BrowserWindowsPage extends BasePage {
             driver.close();
             driver.switchTo().window(parentWindow);
             newWindowMessage.click();
-            File file = driver.getScreenshotAs(OutputType.FILE);
+            TakesScreenshot scrShot = ((TakesScreenshot) driver);
+            File srcFile = scrShot.getScreenshotAs(OutputType.FILE);
             File destinationFile = new File("/Users/mr.lee/Desktop//image.png");
-            FileUtils.copyFile(file, destinationFile);
-        } catch (Exception | Error e) {
+            FileUtils.copyFile(srcFile, destinationFile);
+        } catch (Exception e) {
             System.out.println("Error branch");
         } finally {
             if (driver != null) {
